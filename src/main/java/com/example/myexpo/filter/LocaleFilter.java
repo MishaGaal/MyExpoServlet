@@ -3,6 +3,7 @@ package com.example.myexpo.filter;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Optional;
 
 
 public class LocaleFilter implements Filter {
@@ -14,14 +15,9 @@ public class LocaleFilter implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-
-
         HttpServletRequest req = (HttpServletRequest) request;
-        if (req.getParameter("sessionLocale") != null) {
-            req.getSession().setAttribute("lang", req.getParameter("sessionLocale"));
-        }
+        req.getSession().setAttribute("lang", Optional.ofNullable(req.getParameter("sessionLocale")).orElse("en"));
         chain.doFilter(request, response);
-
     }
 
     @Override

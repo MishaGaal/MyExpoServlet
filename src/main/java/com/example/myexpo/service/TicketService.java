@@ -23,15 +23,13 @@ public class TicketService {
             return dao.create(
                     new Ticket(eDao.findById(id)
                             .orElseThrow(() -> new Exception("can't find such expo")), user))
-                    .orElseThrow(() -> new Exception("no ticket created"));
+                    .orElseThrow(() -> new Exception("ticket can't create"));
         }
     }
 
     public List<StatUtils> getViewStat() throws Exception {
         try (TicketDao dao = daoFactory.createTicketDao()) {
-            return dao.countAllByOrderByExpo()
-                    .orElseThrow(() -> new Exception("no ticket created"));
-
+            return dao.countAllByOrderByExpo().orElseThrow(() -> new Exception("no ticket created"));
         }
     }
 }

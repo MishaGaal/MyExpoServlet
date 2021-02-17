@@ -54,7 +54,6 @@
         <filter-name>AdminFilter</filter-name>
         <url-pattern>/app/expo/*</url-pattern>
         <url-pattern>/app/user</url-pattern>
-        <url-pattern>/app/edit/*</url-pattern>
         <url-pattern>/app/stat</url-pattern>
     </filter-mapping>
 

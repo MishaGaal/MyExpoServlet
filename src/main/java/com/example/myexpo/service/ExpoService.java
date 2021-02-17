@@ -61,9 +61,7 @@ public class ExpoService {
 
     public Expo findById(Integer id) throws Exception {
         try (ExpoDao dao = daoFactory.createExpoDao()) {
-            return dao
-                    .findById(id)
-                    .orElseThrow(() -> new Exception("no expo have been found"));
+            return dao.findById(id).orElseThrow(() -> new Exception("no expo have been found"));
         }
     }
 

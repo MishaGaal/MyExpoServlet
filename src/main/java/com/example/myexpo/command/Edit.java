@@ -19,26 +19,23 @@ public class Edit implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         try {
-            String path = request.getRequestURI();
             HttpSession session = request.getSession();
-            Integer id = Integer.parseInt(path.replaceAll(".*\\/expo\\/edit\\/", ""));
-            Expo expo = (Expo) request.getSession().getAttribute("expo");
-            if (expo == null) {
-                session.setAttribute("id", id);
-                session.setAttribute("expo", expoService.findById(id));
+            Integer id = CommandUtility.extractId(request);
+            if (request.getParameter("imgName") == null) {
                 session.setAttribute("holles", Expo.Holle.values());
+                session.setAttribute("expo", expoService.findById(id));
                 return "/edit.jsp";
             }
-            session.setAttribute("expoDTO", Validator.createDto(request));
             if (Validator.validate(request)) {
-                Expo ex = Validator.buildExpo(request);
+                Expo ex = CommandUtility.buildExpo(request);
                 ex.setId(id);
+                session.removeAttribute("expo");
                 expoService.expoSubmit(ex);
             }
-            session.removeAttribute("expo");
         } catch (Exception e) {
             log.info("{}", "Validation Exception: " + e.getMessage());
-            request.getSession().setAttribute("holles", Expo.Holle.values());
+            request.getSession()
+                    .setAttribute("valid", e.getMessage());
             return "/edit.jsp";
         }
 

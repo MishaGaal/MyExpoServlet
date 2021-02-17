@@ -5,7 +5,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 public class Delete implements Command {
 
@@ -15,11 +14,7 @@ public class Delete implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         try {
-            String path = request.getRequestURI();
-            HttpSession session = request.getSession();
-            Integer id = Integer.parseInt(path.replaceAll(".*\\/expo\\/delete\\/", ""));
-            session.setAttribute("expo", expoService.deleteBy(id));
-
+            request.getSession().setAttribute("expo", expoService.deleteBy(CommandUtility.extractId(request)));
         } catch (Exception e) {
             log.info("{}", "delete Exception: " + e.getMessage());
         }

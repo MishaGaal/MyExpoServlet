@@ -20,6 +20,5 @@ public class SessionListener implements HttpSessionListener {
                 .getAttribute("userName");
         loggedUsers.remove(userName);
         httpSessionEvent.getSession().setAttribute("loggedUsers", loggedUsers);
-
     }
 }

@@ -1,11 +1,11 @@
 package com.example.myexpo.command;
 
 import com.example.myexpo.service.ExpoService;
-import com.example.myexpo.util.Validator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 public class Main implements Command {
 
@@ -15,8 +15,12 @@ public class Main implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         try {
-            int page = Validator.getPageNum(request);
-            request.getSession().setAttribute("pages", expoService.getExhibited(page));
+            request.getSession()
+                    .setAttribute("pages",
+                            expoService.getExhibited(
+                                    Integer.parseInt(
+                                            Optional.ofNullable(request.getParameter("page"))
+                                                    .orElse("0"))));
         } catch (Exception e) {
             log.info("{}", "Can't get expos: " + e.getMessage());
         }

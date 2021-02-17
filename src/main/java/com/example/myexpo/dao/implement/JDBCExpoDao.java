@@ -276,17 +276,16 @@ public class JDBCExpoDao implements ExpoDao {
     @Override
     public Optional<Expo> update(Expo expo) {
         PreparedStatement pstmt = null;
-        ResultSet rs = null;
         try {
             pstmt = connection.prepareStatement(EXPO_UPDATE);
             pstmt = fillStatement(pstmt, expo);
             pstmt.setInt(11, expo.getId());
-            rs = pstmt.executeQuery();
+            pstmt.executeUpdate();
             return Optional.of(expo);
         } catch (Exception e) {
-            log.info("{}", "Couldn't find expos " + e.getMessage());
+            log.info("{}", "Couldn't update expo " + e.getMessage());
         } finally {
-            close(rs, pstmt);
+            close(pstmt);
         }
         return Optional.empty();
     }

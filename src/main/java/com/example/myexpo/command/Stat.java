@@ -5,7 +5,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 public class Stat implements Command {
 
@@ -15,8 +14,7 @@ public class Stat implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         try {
-            HttpSession session = request.getSession();
-            session.setAttribute("tickets", ticketService.getViewStat());
+            request.getSession().setAttribute("tickets", ticketService.getViewStat());
         } catch (Exception e) {
             log.info("{}", "Cant get stat: " + e.getMessage());
         }

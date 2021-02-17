@@ -25,9 +25,9 @@ public class Add implements Command {
                 session.setAttribute("expoDTO", new ExpoDto());
                 return "/add.jsp";
             }
-            session.setAttribute("expoDTO", Validator.createDto(request));
+            session.setAttribute("expoDTO", CommandUtility.createDto(request));
             if (Validator.validate(request)) {
-                expoService.addNewExpo(Validator.buildExpo(request));
+                expoService.addNewExpo(CommandUtility.buildExpo(request));
             }
             session.removeAttribute("expo");
         } catch (Exception e) {

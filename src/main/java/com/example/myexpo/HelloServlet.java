@@ -1,7 +1,6 @@
 package com.example.myexpo;
 
 import com.example.myexpo.command.*;
-import com.example.myexpo.util.Validator;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -14,7 +13,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 
-//TODO fix cache pages!
+//TODO  AtomicReference, Optional.ofNullable get methods ,fix cache pages, open id's, tests
 
 
 public class HelloServlet extends HttpServlet {
@@ -61,8 +60,7 @@ public class HelloServlet extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-
-        String page = Validator.processPath(commands, request);
+        String page = CommandUtility.processPath(commands, request);
         if (page.contains("redirect:")) {
             response.sendRedirect(page.replace("redirect:", "/myexpo/app"));
         } else {

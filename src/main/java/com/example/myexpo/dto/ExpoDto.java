@@ -12,6 +12,7 @@ public class ExpoDto {
     private String amount;
     private String ticketPrice;
 
+
     public static Builder builder() {
         return new ExpoDto().new Builder();
     }
