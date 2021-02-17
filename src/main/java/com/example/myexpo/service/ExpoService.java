@@ -67,13 +67,6 @@ public class ExpoService {
         }
     }
 
-    public Integer maxPages() throws Exception {
-        try (ExpoDao dao = daoFactory.createExpoDao()) {
-            return dao
-                    .getMaxPages()
-                    .orElse(0);
-        }
-    }
 
     public Expo addNewExpo(Expo expo) throws Exception {
         try (ExpoDao dao = daoFactory.createExpoDao()) {
