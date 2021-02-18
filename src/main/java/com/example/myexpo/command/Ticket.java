@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 
 public class Ticket implements Command {
     static final Logger log = LogManager.getRootLogger();
-    private TicketService ticketService = new TicketService();
+    private final TicketService ticketService = new TicketService();
 
     @Override
     public String execute(HttpServletRequest request) {

@@ -1,14 +1,11 @@
 package com.example.myexpo.dao.implement;
 
 import org.apache.commons.dbcp.BasicDataSource;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.util.ResourceBundle;
 
 public class ConnectionPool {
-    static final Logger log = LogManager.getRootLogger();
     private static volatile DataSource dataSource;
 
     public static DataSource getDataSource() {

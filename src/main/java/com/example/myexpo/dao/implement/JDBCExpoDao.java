@@ -16,30 +16,26 @@ import java.util.*;
 public class JDBCExpoDao implements ExpoDao {
 
     static final Logger log = LogManager.getRootLogger();
-    private ResourceBundle prop;
-    private Connection connection;
-    private String EXPO_FIND_ALL;
-    private String EXPO_FIND_HOLLES;
-    private String EXPO_FIND_BY_ID;
-    private String EXPO_CREATE;
-    private String EXPO_UPDATE_HOLLES;
-    private String EXPO_UPDATE;
-    private String EXPO_DELETE;
-    private String EXPO_DELETE_HOLLES;
-    private String EXPO_FIND_ALL_EXH;
-    private String EXPO_FIND_ALL_EXH_PRICE_DESC;
-    private String EXPO_FIND_ALL_EXH_PRICE_ASC;
-    private String EXPO_FIND_ALL_EXH_DATES;
-    private String EXPO_FIND_ALL_EXH_THEME;
-    private String EXPO_MAX_PAGES;
-    private Integer limit;
+    private final Connection connection;
+    private final String EXPO_FIND_ALL;
+    private final String EXPO_FIND_BY_ID;
+    private final String EXPO_CREATE;
+    private final String EXPO_UPDATE_HOLLES;
+    private final String EXPO_UPDATE;
+    private final String EXPO_DELETE;
+    private final String EXPO_DELETE_HOLLES;
+    private final String EXPO_FIND_ALL_EXH;
+    private final String EXPO_FIND_ALL_EXH_PRICE_DESC;
+    private final String EXPO_FIND_ALL_EXH_PRICE_ASC;
+    private final String EXPO_FIND_ALL_EXH_DATES;
+    private final String EXPO_FIND_ALL_EXH_THEME;
+    private final Integer limit;
 
 
     public JDBCExpoDao(Connection connection) {
         this.connection = connection;
-        prop = ResourceBundle.getBundle("statements");
+        ResourceBundle prop = ResourceBundle.getBundle("statements");
         EXPO_FIND_ALL = prop.getString("EXPO_FIND_ALL");
-        EXPO_FIND_HOLLES = prop.getString("EXPO_FIND_HOLLES");
         EXPO_FIND_BY_ID = prop.getString("EXPO_FIND_BY_ID");
         EXPO_CREATE = prop.getString("EXPO_CREATE");
         EXPO_UPDATE_HOLLES = prop.getString("EXPO_UPDATE_HOLLES");
@@ -51,7 +47,6 @@ public class JDBCExpoDao implements ExpoDao {
         EXPO_FIND_ALL_EXH_PRICE_ASC = prop.getString("EXPO_FIND_ALL_EXH_PRICE_ASC");
         EXPO_FIND_ALL_EXH_DATES = prop.getString("EXPO_FIND_ALL_EXH_DATES");
         EXPO_FIND_ALL_EXH_THEME = prop.getString("EXPO_FIND_ALL_EXH_THEME");
-        EXPO_MAX_PAGES = prop.getString("EXPO_MAX_PAGES");
         limit = Integer.parseInt(prop.getString("EXPO_PAGE_LIMIT"));
 
     }
@@ -72,7 +67,7 @@ public class JDBCExpoDao implements ExpoDao {
             connection.setAutoCommit(false);
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
             pstmt = connection.prepareStatement(EXPO_CREATE, Statement.RETURN_GENERATED_KEYS);
-            pstmt = fillStatement(pstmt, expo);
+            fillStatement(pstmt, expo);
             pstmt.executeUpdate();
             rs = pstmt.getGeneratedKeys();
             if (rs.next()) {
@@ -140,7 +135,7 @@ public class JDBCExpoDao implements ExpoDao {
             while (rs.next()) {
                 Expo expo = expoMapper
                         .extractFromResultSet(rs);
-                expo = expoMapper.makeUnique(expos, expo);
+                expoMapper.makeUnique(expos, expo);
                 count = rs.getInt("count");
             }
             return new Page<>(new ArrayList<>(expos.values()), count / limit);
@@ -258,7 +253,7 @@ public class JDBCExpoDao implements ExpoDao {
             connection.setAutoCommit(false);
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
             pstmt = connection.prepareStatement(EXPO_UPDATE);
-            pstmt = fillStatement(pstmt, expo);
+            fillStatement(pstmt, expo);
             pstmt.setInt(11, expo.getId());
             pstmt.executeUpdate();
             pstmt = setUpHolles(expo, connection);

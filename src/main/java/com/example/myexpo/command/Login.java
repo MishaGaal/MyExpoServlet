@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 public class Login implements Command {
 
     static final Logger log = LogManager.getRootLogger();
-    private UserService userService = new UserService();
+    private final UserService userService = new UserService();
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -19,9 +19,7 @@ public class Login implements Command {
             String pass = request.getParameter("pass");
             CommandUtility.logOutUser(request, name);
             if (name == null
-                    || name.equals("")
                     || pass == null
-                    || pass.equals("")
                     || CommandUtility.checkUserIsLogged(request, name)) {
                 return "/login.jsp";
             }

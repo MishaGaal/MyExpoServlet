@@ -10,16 +10,16 @@ import java.util.Optional;
 public class FilterAsc implements Command {
 
     static final Logger log = LogManager.getRootLogger();
-    private ExpoService expoService = new ExpoService();
+    private final ExpoService expoService = new ExpoService();
 
     @Override
     public String execute(HttpServletRequest request) {
         try {
-            request.getSession()
-                    .setAttribute("pages",
-                            expoService
-                                    .findByExhibitedTrueOrderByPriceAsc(Integer.parseInt(Optional.ofNullable(request.getParameter("page"))
-                                            .orElse("0"))));
+            request.getSession().setAttribute(
+                    "pages",
+                    expoService
+                            .findByExhibitedTrueOrderByPriceAsc(Integer.parseInt(Optional.ofNullable(request.getParameter("page"))
+                                    .orElse("0"))));
         } catch (Exception e) {
             log.info("{}", "Cant find by desc price expos: " + e.getMessage());
         }

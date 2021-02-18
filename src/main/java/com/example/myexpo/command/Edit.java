@@ -14,13 +14,14 @@ import javax.servlet.http.HttpSession;
 public class Edit implements Command {
 
     static final Logger log = LogManager.getRootLogger();
-    private ExpoService expoService = new ExpoService();
+    private final ExpoService expoService = new ExpoService();
 
     @Override
     public String execute(HttpServletRequest request) {
         try {
             HttpSession session = request.getSession();
             Integer id = CommandUtility.extractId(request);
+
             if (request.getParameter("imgName") == null) {
                 session.setAttribute("holles", Expo.Holle.values());
                 session.setAttribute("expo", expoService.findById(id));
@@ -38,7 +39,6 @@ public class Edit implements Command {
                     .setAttribute("valid", e.getMessage());
             return "/edit.jsp";
         }
-
         return "redirect:/expo";
     }
 

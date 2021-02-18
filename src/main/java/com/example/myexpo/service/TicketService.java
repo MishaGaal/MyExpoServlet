@@ -1,7 +1,6 @@
 package com.example.myexpo.service;
 
 import com.example.myexpo.dao.DaoFactory;
-import com.example.myexpo.dao.ExpoDao;
 import com.example.myexpo.dao.TicketDao;
 import com.example.myexpo.entity.Ticket;
 import com.example.myexpo.entity.User;
@@ -19,17 +18,14 @@ public class TicketService {
     }
 
     public Ticket buyTicket(Integer id, User user) throws Exception {
-        try (TicketDao dao = daoFactory.createTicketDao(); ExpoDao eDao = daoFactory.createExpoDao()) {
-            return dao.create(
-                    new Ticket(eDao.findById(id)
-                            .orElseThrow(() -> new Exception("can't find such expo")), user))
-                    .orElseThrow(() -> new Exception("ticket can't create"));
+        try (TicketDao dao = daoFactory.createTicketDao()) {
+            return dao.create(id, user).orElseThrow(() -> new Exception("transaction rollback"));
         }
     }
 
     public List<StatUtils> getViewStat() throws Exception {
         try (TicketDao dao = daoFactory.createTicketDao()) {
-            return dao.countAllByOrderByExpo().orElseThrow(() -> new Exception("no ticket created"));
+            return dao.countAllByOrderByExpo().orElseThrow(() -> new Exception("could load stat"));
         }
     }
 }

@@ -18,23 +18,20 @@ import java.util.*;
 public class JDBCTicketDao implements TicketDao {
 
     static final Logger log = LogManager.getRootLogger();
-    private ResourceBundle prop;
-    private Connection connection;
-    private String TICKET_USER;
-    private String TICKET_BUY;
-    private String UPDATE_AMOUNT;
-    private String TICKET_STAT;
-    private JDBCExpoDao expoDao;
+    private final Connection connection;
+    private final String TICKET_USER;
+    private final String TICKET_BUY;
+    private final String UPDATE_AMOUNT;
+    private final String TICKET_STAT;
 
 
     public JDBCTicketDao(Connection connection) {
         this.connection = connection;
-        prop = ResourceBundle.getBundle("statements");
+        ResourceBundle prop = ResourceBundle.getBundle("statements");
         TICKET_USER = prop.getString("TICKET_USER");
         TICKET_BUY = prop.getString("TICKET_BUY");
         UPDATE_AMOUNT = prop.getString("UPDATE_AMOUNT");
         TICKET_STAT = prop.getString("TICKET_STAT");
-        expoDao = new JDBCExpoDao(connection);
 
     }
 
@@ -44,18 +41,15 @@ public class JDBCTicketDao implements TicketDao {
         PreparedStatement pstmt = null;
         PreparedStatement pstmt2 = null;
         ResultSet rs = null;
-        Ticket ticket;
+        Ticket ticket = null;
         try {
-
             connection.setAutoCommit(false);
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
             pstmt = connection.prepareStatement(TICKET_BUY, Statement.RETURN_GENERATED_KEYS);
             int k = 1;
-
-            pstmt.setInt(k++, user.getId());
             pstmt.setInt(k++, expo_id);
+            pstmt.setInt(k++, user.getId());
             pstmt.executeUpdate();
-
             rs = pstmt.getGeneratedKeys();
             if (rs.next()) {
                 ticket = new Ticket();
@@ -66,6 +60,7 @@ public class JDBCTicketDao implements TicketDao {
             pstmt2.setInt(x++, expo_id);
             pstmt2.executeUpdate();
             connection.commit();
+            return Optional.of(ticket);
         } catch (Exception e) {
             log.info("{}", "Couldn't buy ticket " + e.getMessage());
             makeRollback(connection);
@@ -87,7 +82,6 @@ public class JDBCTicketDao implements TicketDao {
             pstmt.setInt(k++, ticket.getExpo().getId());
             pstmt.setInt(k++, ticket.getUser().getId());
             pstmt.executeUpdate();
-            expoDao.update(ticket.getExpo());
             connection.commit();
             return Optional.of(ticket);
         } catch (Exception e) {

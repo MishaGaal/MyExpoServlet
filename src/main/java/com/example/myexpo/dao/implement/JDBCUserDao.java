@@ -13,19 +13,18 @@ import java.util.*;
 public class JDBCUserDao implements UserDao {
 
     static final Logger log = LogManager.getRootLogger();
-    private ResourceBundle prop;
-    private Connection connection;
-    private String USER_CREATE;
-    private String USER_CREATE_ROLE;
-    private String USER_FIND_BY_ID;
-    private String USER_FIND_BY_USERNAME;
-    private String USER_FIND_ALL;
-    private String USER_UPDATE;
-    private String USER_UPDATE_ROLES;
+    private final Connection connection;
+    private final String USER_CREATE;
+    private final String USER_CREATE_ROLE;
+    private final String USER_FIND_BY_ID;
+    private final String USER_FIND_BY_USERNAME;
+    private final String USER_FIND_ALL;
+    private final String USER_UPDATE;
+    private final String USER_UPDATE_ROLES;
 
     public JDBCUserDao(Connection connection) {
         this.connection = connection;
-        prop = ResourceBundle.getBundle("statements");
+        ResourceBundle prop = ResourceBundle.getBundle("statements");
         USER_CREATE = prop.getString("USER_CREATE");
         USER_CREATE_ROLE = prop.getString("USER_CREATE_ROLE");
         USER_FIND_BY_ID = prop.getString("USER_FIND_BY_ID");
@@ -46,7 +45,7 @@ public class JDBCUserDao implements UserDao {
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
             pstmt = connection.prepareStatement(USER_CREATE, Statement.RETURN_GENERATED_KEYS);
             pstmt2 = connection.prepareStatement(USER_CREATE_ROLE);
-            pstmt = fillStatement(pstmt, user);
+            fillStatement(pstmt, user);
             pstmt.executeUpdate();
             rs = pstmt.getGeneratedKeys();
             if (rs.next()) {
@@ -131,7 +130,7 @@ public class JDBCUserDao implements UserDao {
         ResultSet rs = null;
         try {
             pstmt = connection.prepareStatement(USER_UPDATE);
-            pstmt = fillStatement(pstmt, user);
+            fillStatement(pstmt, user);
             rs = pstmt.executeQuery();
             return Optional.of(user);
         } catch (Exception e) {

@@ -54,7 +54,6 @@ com\example\myexpo\entity\Ticket$Builder.class
 com\example\myexpo\entity\User$Role.class
 com\example\myexpo\util\Page.class
 com\example\myexpo\entity\User$Builder.class
-com\example\myexpo\command\Expos.class
 com\example\myexpo\dao\mapper\StatUtilsMapper.class
 com\example\myexpo\command\User.class
 com\example\myexpo\command\Registration.class

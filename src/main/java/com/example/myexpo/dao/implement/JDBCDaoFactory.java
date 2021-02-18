@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class JDBCDaoFactory extends DaoFactory {
 
-    private DataSource dataSource = ConnectionPool.getDataSource();
+    private final DataSource dataSource = ConnectionPool.getDataSource();
 
     @Override
     public UserDao createUserDao() {

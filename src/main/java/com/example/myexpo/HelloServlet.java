@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 
-//TODO  AtomicReference, Optional.ofNullable get methods ,fix cache pages, open id's, tests
+//TODO tests coveredge
 
 
 public class HelloServlet extends HttpServlet {
@@ -24,7 +24,6 @@ public class HelloServlet extends HttpServlet {
 
         servletConfig.getServletContext()
                 .setAttribute("loggedUsers", new HashSet<String>());
-
 
         commands.put("logout", new LogOut());
         commands.put("login", new Login());

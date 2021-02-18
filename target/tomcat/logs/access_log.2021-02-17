@@ -1,9 +1,0 @@
-0:0:0:0:0:0:0:1 - - [17/Feb/2021:13:50:13 +0100] "GET /myexpo/app/ HTTP/1.1" 200 4748 http-bio-8080-exec-1 1554
-0:0:0:0:0:0:0:1 - - [17/Feb/2021:13:50:14 +0100] "GET /myexpo/app/main HTTP/1.1" 302 - http-bio-8080-exec-3 2
-0:0:0:0:0:0:0:1 - - [17/Feb/2021:13:50:14 +0100] "GET /myexpo/app/app/login HTTP/1.1" 200 2505 http-bio-8080-exec-4 90
-0:0:0:0:0:0:0:1 - - [17/Feb/2021:13:50:16 +0100] "POST /myexpo/app/login HTTP/1.1" 302 - http-bio-8080-exec-5 413
-0:0:0:0:0:0:0:1 - - [17/Feb/2021:13:50:16 +0100] "GET /myexpo/app/main HTTP/1.1" 200 18167 http-bio-8080-exec-6 80
-0:0:0:0:0:0:0:1 - - [17/Feb/2021:13:50:23 +0100] "GET /myexpo/app/main?page=2 HTTP/1.1" 200 17802 http-bio-8080-exec-7 21
-0:0:0:0:0:0:0:1 - - [17/Feb/2021:13:50:24 +0100] "GET /myexpo/app/expo/edit/141 HTTP/1.1" 200 4542 http-bio-8080-exec-8 105
-0:0:0:0:0:0:0:1 - - [17/Feb/2021:13:50:29 +0100] "POST /myexpo/app/expo/edit/141 HTTP/1.1" 200 4562 http-bio-8080-exec-9 24
-0:0:0:0:0:0:0:1 - - [17/Feb/2021:13:50:35 +0100] "POST /myexpo/app/expo/edit/141 HTTP/1.1" 200 4562 http-bio-8080-exec-10 5

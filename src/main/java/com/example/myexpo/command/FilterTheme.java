@@ -10,13 +10,14 @@ import java.util.Optional;
 
 public class FilterTheme implements Command {
     static final Logger log = LogManager.getRootLogger();
-    private ExpoService expoService = new ExpoService();
+    private final ExpoService expoService = new ExpoService();
 
     @Override
     public String execute(HttpServletRequest request) {
         try {
             request.getSession()
-                    .setAttribute("pages",
+                    .setAttribute(
+                            "pages",
                             expoService
                                     .findByExhibitedTrueOrderByTheme(
                                             request.getParameter("theme"),

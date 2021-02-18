@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 public class Stat implements Command {
 
     static final Logger log = LogManager.getRootLogger();
-    private TicketService ticketService = new TicketService();
+    private final TicketService ticketService = new TicketService();
 
     @Override
     public String execute(HttpServletRequest request) {

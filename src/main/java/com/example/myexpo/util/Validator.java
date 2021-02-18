@@ -29,18 +29,11 @@ public class Validator {
 
     public static boolean validate(HttpServletRequest request) throws Exception {
 
-        System.out.println(request.getParameter("description"));
-
         if (Optional.ofNullable((request.getParameter("title_ua")))
                 .orElseThrow(() -> new Exception("Enter title ua!"))
                 .length() < 1) {
             throw new Exception("title ua is too short!");
         }
-
-        /*Stream.of(Optional.ofNullable((request.getParameter("title_ua")))
-                .orElseThrow(()-> new Exception("Enter title ua!")))
-                .filter(s->s.length()<1)
-                .forEach(s -> {throw new Exception("title ua is too short!");});*/
 
         if (Optional.ofNullable((request.getParameter("title")))
                 .orElseThrow(() -> new Exception("Enter title!"))

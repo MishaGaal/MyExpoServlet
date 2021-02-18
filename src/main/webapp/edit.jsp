@@ -9,9 +9,9 @@
     <title>Expo editor</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="container-fluid bg-light">
+<body class="container-fluid bg-light mt-5">
 <jsp:include page="blocks/header.jsp"/>
-<div class="container mt-5">
+<div class="container">
     <h1>Edit Expo</h1>
     <form method="post" action="${pageContext.request.contextPath}/app/expo/edit/${expo.id}">
         <div><label>Capture: </label><input name="imgName" type="text" value="${expo.imgName}"/></div>

@@ -59,23 +59,28 @@ public class CommandUtility {
     public static Set<Expo.Holle> extractHolles(String[] holles) {
         Set<Expo.Holle> res = new HashSet<>();
 
-            /*for (String holle : holles) {
-                if ("RED".equals(holle)) {
+        for (String holle : holles) {
+            switch (holle) {
+                case "RED": {
                     res.add(Expo.Holle.RED);
+                    break;
                 }
-                if ("BLUE".equals(holle)) {
+                case "BLUE": {
                     res.add(Expo.Holle.BLUE);
+                    break;
                 }
-                if ("GREEN".equals(holle)) {
+                case "GREEN": {
                     res.add(Expo.Holle.GREEN);
+                    break;
                 }
-            }*/
-        Arrays.stream(holles).filter("RED"::equals)
+            }
+        }
+       /* Arrays.stream(holles).filter("RED"::equals)
                 .forEach(i -> res.add(Expo.Holle.RED));
         Arrays.stream(holles).filter("BLUE"::equals)
                 .forEach(i -> res.add(Expo.Holle.BLUE));
         Arrays.stream(holles).filter("GREEN"::equals)
-                .forEach(i -> res.add(Expo.Holle.GREEN));
+                .forEach(i -> res.add(Expo.Holle.GREEN));*/
 
         return res;
     }
@@ -86,25 +91,14 @@ public class CommandUtility {
         AtomicReference<Command> command = new AtomicReference<>(commands.getOrDefault(path,
                 (r) -> "/index.jsp"));
         Stream.of(path)
-                .filter(s -> s.matches("ticket\\/[0-9]+\\/buy"))
+                .filter(s -> s.matches("ticket/[0-9]+/buy"))
                 .forEach(s -> command.set(commands.get("buy")));
         Stream.of(path)
-                .filter(s -> s.matches("expo\\/edit\\/[0-9]+"))
+                .filter(s -> s.matches("expo/edit/[0-9]+"))
                 .forEach(s -> command.set(commands.get("edit")));
         Stream.of(path)
-                .filter(s -> s.matches("expo\\/delete\\/[0-9]+"))
+                .filter(s -> s.matches("expo/delete/[0-9]+"))
                 .forEach(s -> command.set(commands.get("delete")));
-
-      /*  if (path.matches("ticket\\/[0-9]+\\/buy")) {
-            command.set(commands.get("buy"));
-        }
-        if (path.matches("expo\\/edit\\/[0-9]+")) {
-            command.set(commands.get("edit"));
-        }
-        if (path.matches("expo\\/delete\\/[0-9]+")) {
-            command.set(commands.get("delete"));
-        }
-*/
 
         return command.get().execute(request);
     }
@@ -113,25 +107,14 @@ public class CommandUtility {
         String path = request.getRequestURI().replaceAll(".*/app/", "");
         AtomicReference<Integer> id = new AtomicReference<>(0);
         Stream.of(path)
-                .filter(s -> s.matches(".*\\/[0-9]+\\/buy"))
+                .filter(s -> s.matches(".*/[0-9]+/buy"))
                 .forEach(s -> id.set(Integer.parseInt(s.replaceAll("[^0-9.]", ""))));
         Stream.of(path)
-                .filter(s -> s.matches(".*\\/edit\\/[0-9]+"))
+                .filter(s -> s.matches(".*/edit/[0-9]+"))
                 .forEach(s -> id.set(Integer.parseInt(path.replaceAll("[^0-9.]", ""))));
         Stream.of(path)
-                .filter(s -> s.matches(".*\\/delete\\/[0-9]+"))
+                .filter(s -> s.matches(".*/delete/[0-9]+"))
                 .forEach(s -> id.set(Integer.parseInt(path.replaceAll("[^0-9.]", ""))));
-
-      /*  if (path.matches(".*\\/[0-9]+\\/buy")) {
-            String token = path.replaceAll("\\/buy", "");
-            id.set(Integer.parseInt(token.replaceAll(".*\\/ticket\\/", "")));
-        }
-        if (path.matches(".*\\/edit\\/[0-9]+")) {
-            id.set(Integer.parseInt(path.replaceAll(".*\\/expo\\/edit\\/", "")));
-        }
-        if (path.matches(".*\\/delete\\/[0-9]+")) {
-            id.set(Integer.parseInt(path.replaceAll(".*\\/expo\\/delete\\/", "")));
-        }*/
         return id.get();
     }
 
@@ -147,6 +130,7 @@ public class CommandUtility {
     static boolean checkUserIsLogged(HttpServletRequest request, String userName) {
         HashSet<String> loggedUsers = (HashSet<String>) request.getSession().getServletContext()
                 .getAttribute("loggedUsers");
+
         if (loggedUsers.stream().anyMatch(userName::equals)) {
             return true;
         }

@@ -10,17 +10,15 @@ import java.util.Optional;
 public class Main implements Command {
 
     static final Logger log = LogManager.getRootLogger();
-    private ExpoService expoService = new ExpoService();
+    private final ExpoService expoService = new ExpoService();
 
     @Override
     public String execute(HttpServletRequest request) {
         try {
-            request.getSession()
-                    .setAttribute("pages",
-                            expoService.getExhibited(
-                                    Integer.parseInt(
-                                            Optional.ofNullable(request.getParameter("page"))
-                                                    .orElse("0"))));
+            request.getSession().setAttribute(
+                    "pages",
+                    expoService.getExhibited(Integer.parseInt(Optional.ofNullable(request.getParameter("page"))
+                            .orElse("0"))));
         } catch (Exception e) {
             log.info("{}", "Can't get expos: " + e.getMessage());
         }

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 public class Registration implements Command {
 
     static final Logger log = LogManager.getRootLogger();
-    private UserService userService = new UserService();
+    private final UserService userService = new UserService();
 
     @Override
     public String execute(HttpServletRequest request) {

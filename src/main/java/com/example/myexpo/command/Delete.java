@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 public class Delete implements Command {
 
     static final Logger log = LogManager.getRootLogger();
-    private ExpoService expoService = new ExpoService();
+    private final ExpoService expoService = new ExpoService();
 
     @Override
     public String execute(HttpServletRequest request) {

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 public class Add implements Command {
 
     static final Logger log = LogManager.getRootLogger();
-    private ExpoService expoService = new ExpoService();
+    private final ExpoService expoService = new ExpoService();
 
     @Override
     public String execute(HttpServletRequest request) {
