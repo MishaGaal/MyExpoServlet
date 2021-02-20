@@ -12,6 +12,6 @@ public interface TicketDao extends GenericDao<Ticket> {
 
     Optional<List<StatUtils>> countAllByOrderByExpo();
 
-    Optional<Ticket> create(Integer id, User user);
+    Optional<Ticket> create(Integer id, User user, Integer amount);
 
 }

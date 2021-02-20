@@ -75,12 +75,6 @@ public class CommandUtility {
                 }
             }
         }
-       /* Arrays.stream(holles).filter("RED"::equals)
-                .forEach(i -> res.add(Expo.Holle.RED));
-        Arrays.stream(holles).filter("BLUE"::equals)
-                .forEach(i -> res.add(Expo.Holle.BLUE));
-        Arrays.stream(holles).filter("GREEN"::equals)
-                .forEach(i -> res.add(Expo.Holle.GREEN));*/
 
         return res;
     }

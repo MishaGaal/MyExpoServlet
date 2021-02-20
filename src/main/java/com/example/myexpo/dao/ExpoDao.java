@@ -8,17 +8,17 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 public interface ExpoDao extends GenericDao<Expo> {
-    Page<Expo> findAll(int page);
+    Optional<Page<Expo>> findAll(int page);
 
-    Page<Expo> findExhibitedAll(int page);
+    Optional<Page<Expo>> findExhibitedAll(int page);
 
-    Page<Expo> findByExhibitedTrueOrderByPriceDesc(int page);
+    Optional<Page<Expo>> findByExhibitedTrueOrderByPriceDesc(int page);
 
-    Page<Expo> findByExhibitedTrueOrderByPriceAsc(int page);
+    Optional<Page<Expo>> findByExhibitedTrueOrderByPriceAsc(int page);
 
-    Page<Expo> findByExhibitedTrueOrderByDates(LocalDate startDate, LocalDate endDate, int page);
+    Optional<Page<Expo>> findByExhibitedTrueOrderByDates(LocalDate startDate, LocalDate endDate, int page);
 
-    Page<Expo> findByExhibitedTrueOrderByTheme(String theme, int page);
+    Optional<Page<Expo>> findByExhibitedTrueOrderByTheme(String theme, int page);
 
     Optional<Expo> expoSubmit(Expo expo);
 

@@ -2,7 +2,6 @@ package com.example.myexpo.util;
 
 
 import java.util.List;
-import java.util.function.Supplier;
 
 public class Page<T> {
     List<T> expos;
@@ -18,13 +17,6 @@ public class Page<T> {
         this.count = count;
     }
 
-    public <X extends Throwable> Page<T> orElseThrow(Supplier<? extends X> exceptionSupplier) throws X {
-        if (expos != null) {
-            return this;
-        } else {
-            throw exceptionSupplier.get();
-        }
-    }
 
     public List<T> getExpos() {
         return expos;

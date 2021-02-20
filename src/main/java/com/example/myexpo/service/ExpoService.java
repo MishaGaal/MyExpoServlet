@@ -11,7 +11,6 @@ public class ExpoService {
 
     DaoFactory daoFactory = DaoFactory.getInstance();
 
-
     public Page<Expo> getExhibited(int page) throws Exception {
         try (ExpoDao dao = daoFactory.createExpoDao()) {
             return dao.findExhibitedAll(page).orElseThrow(() -> new Exception("no exhibited have been found"));
@@ -61,7 +60,7 @@ public class ExpoService {
 
     public Expo findById(Integer id) throws Exception {
         try (ExpoDao dao = daoFactory.createExpoDao()) {
-            return dao.findById(id).orElseThrow(() -> new Exception("no expo have been found"));
+            return dao.findById(id).orElseThrow(() -> new Exception("no expo by id have been found"));
         }
     }
 

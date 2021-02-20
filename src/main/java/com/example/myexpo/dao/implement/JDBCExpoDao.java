@@ -120,7 +120,7 @@ public class JDBCExpoDao implements ExpoDao {
         return Optional.empty();
     }
 
-    public Page<Expo> findAll(int page) {
+    public Optional<Page<Expo>> findAll(int page) {
         Map<Integer, Expo> expos = new HashMap<>();
         ExpoMapper expoMapper = new ExpoMapper();
         PreparedStatement pstmt = null;
@@ -138,28 +138,28 @@ public class JDBCExpoDao implements ExpoDao {
                 expoMapper.makeUnique(expos, expo);
                 count = rs.getInt("count");
             }
-            return new Page<>(new ArrayList<>(expos.values()), count / limit);
+            return Optional.of(new Page<>(new ArrayList<>(expos.values()), count / limit));
         } catch (Exception e) {
             log.info("{}", "Couldn't find expos " + e.getMessage());
         } finally {
             close(rs, pstmt);
         }
-        return new Page<>(new ArrayList<>(expos.values()), count);
+        return Optional.of(new Page<>(new ArrayList<>(expos.values()), count));
     }
 
-    public Page<Expo> findExhibitedAll(int page) {
+    public Optional<Page<Expo>> findExhibitedAll(int page) {
         return getExpos(page, EXPO_FIND_ALL_EXH);
     }
 
-    public Page<Expo> findByExhibitedTrueOrderByPriceDesc(int page) {
+    public Optional<Page<Expo>> findByExhibitedTrueOrderByPriceDesc(int page) {
         return getExpos(page, EXPO_FIND_ALL_EXH_PRICE_DESC);
     }
 
-    public Page<Expo> findByExhibitedTrueOrderByPriceAsc(int page) {
+    public Optional<Page<Expo>> findByExhibitedTrueOrderByPriceAsc(int page) {
         return getExpos(page, EXPO_FIND_ALL_EXH_PRICE_ASC);
     }
 
-    private Page<Expo> getExpos(int page, String expo_find_all_exh) {
+    private Optional<Page<Expo>> getExpos(int page, String expo_find_all_exh) {
         List<Expo> res = new ArrayList<>();
         ExpoMapper expoMapper = new ExpoMapper();
         PreparedStatement pstmt = null;
@@ -177,16 +177,16 @@ public class JDBCExpoDao implements ExpoDao {
                 res.add(expo);
                 count = rs.getInt("count");
             }
-            return new Page<>(res, count / limit);
+            return Optional.of(new Page<>(res, count / limit));
         } catch (Exception e) {
             log.info("{}", "Couldn't find expos " + e.getMessage());
         } finally {
             close(rs, pstmt);
         }
-        return new Page<>(res, count);
+        return Optional.of(new Page<>(res, count));
     }
 
-    public Page<Expo> findByExhibitedTrueOrderByDates(LocalDate startDate, LocalDate endDate, int page) {
+    public Optional<Page<Expo>> findByExhibitedTrueOrderByDates(LocalDate startDate, LocalDate endDate, int page) {
         List<Expo> res = new ArrayList<>();
         ExpoMapper expoMapper = new ExpoMapper();
         PreparedStatement pstmt = null;
@@ -208,16 +208,16 @@ public class JDBCExpoDao implements ExpoDao {
                 res.add(expo);
                 count = rs.getInt("count");
             }
-            return new Page<>(res, count / limit);
+            return Optional.of(new Page<>(res, count / limit));
         } catch (Exception e) {
             log.info("{}", "Couldn't find expos " + e.getMessage());
         } finally {
             close(rs, pstmt);
         }
-        return new Page<>(res, count);
+        return Optional.of(new Page<>(res, count));
     }
 
-    public Page<Expo> findByExhibitedTrueOrderByTheme(String theme, int page) {
+    public Optional<Page<Expo>> findByExhibitedTrueOrderByTheme(String theme, int page) {
         List<Expo> res = new ArrayList<>();
         ExpoMapper expoMapper = new ExpoMapper();
         PreparedStatement pstmt = null;
@@ -237,13 +237,13 @@ public class JDBCExpoDao implements ExpoDao {
                 res.add(expo);
                 count = rs.getInt("count");
             }
-            return new Page<>(res, count / limit);
+            return Optional.of(new Page<>(res, count / limit));
         } catch (Exception e) {
             log.info("{}", "Couldn't find expos " + e.getMessage());
         } finally {
             close(rs, pstmt);
         }
-        return new Page<>(res, count);
+        return Optional.of(new Page<>(res, count));
     }
 
     @Override
@@ -273,7 +273,7 @@ public class JDBCExpoDao implements ExpoDao {
         PreparedStatement pstmt = null;
         try {
             pstmt = connection.prepareStatement(EXPO_UPDATE);
-            pstmt = fillStatement(pstmt, expo);
+            fillStatement(pstmt, expo);
             pstmt.setInt(11, expo.getId());
             pstmt.executeUpdate();
             return Optional.of(expo);

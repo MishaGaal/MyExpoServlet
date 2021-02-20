@@ -23,7 +23,8 @@
     <c:forEach items="${tickets}" var="ticket">
         <div class="card my-3">
             <div class="card-body">
-                <p class="card-text">${ticket.title} sold:  <h5 class="card-title">
+                <p class="card-text">${ticket.title}</p>
+                <p>sold:  <h5 class="card-title">
                     ${ticket.count}</h5> tickets</p>
             </div>
         </div>

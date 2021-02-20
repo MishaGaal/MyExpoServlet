@@ -20,14 +20,14 @@
                 <a class="page-link  border-secondary text-muted" tabindex="-1"
                    href="?page=0"><fmt:message key="start"/></a>
             </li>
-            <c:forEach begin="1" end="${sessionScope.pages.count}" var="i">
+            <c:forEach begin="1" end="${sessionScope.pages.count-1}" var="i">
                 <li class="page-item">
                     <a class="page-link border-secondary text-muted" tabindex="-1" href="?page=${i}">${i}</a>
                 </li>
             </c:forEach>
             <li class="page-item ">
                 <a class="page-link  border-secondary text-muted" tabindex="-1"
-                   href="?page=${sessionScope.pages.count}"><fmt:message key="end"/></a>
+                   href="?page=${sessionScope.pages.count-1}"><fmt:message key="end"/></a>
             </li>
         </ul>
     </div>

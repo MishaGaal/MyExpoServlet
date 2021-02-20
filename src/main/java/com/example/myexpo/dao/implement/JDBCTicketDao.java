@@ -37,7 +37,7 @@ public class JDBCTicketDao implements TicketDao {
 
 
     @Override
-    public Optional<Ticket> create(Integer expo_id, User user) {
+    public Optional<Ticket> create(Integer expo_id, User user, Integer amount) {
         PreparedStatement pstmt = null;
         PreparedStatement pstmt2 = null;
         ResultSet rs = null;
@@ -57,7 +57,9 @@ public class JDBCTicketDao implements TicketDao {
             }
             pstmt2 = connection.prepareStatement(UPDATE_AMOUNT);
             int x = 1;
+            pstmt2.setInt(x++, amount);
             pstmt2.setInt(x++, expo_id);
+            pstmt2.setInt(x++, amount);
             pstmt2.executeUpdate();
             connection.commit();
             return Optional.of(ticket);
