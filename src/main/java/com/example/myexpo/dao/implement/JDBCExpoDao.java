@@ -256,7 +256,7 @@ public class JDBCExpoDao implements ExpoDao {
             fillStatement(pstmt, expo);
             pstmt.setInt(11, expo.getId());
             pstmt.executeUpdate();
-            pstmt = setUpHolles(expo, connection);
+            pstmt = submitHolles(expo, connection);
             connection.commit();
             return Optional.of(expo);
         } catch (Exception e) {
@@ -344,6 +344,14 @@ public class JDBCExpoDao implements ExpoDao {
             pstmt.executeUpdate();
         }
         return pstmt;
+    }
+
+    private PreparedStatement submitHolles(Expo expo, Connection connection) throws SQLException {
+        PreparedStatement pstmt = connection.prepareStatement(EXPO_DELETE_HOLLES);
+        int k = 1;
+        pstmt.setInt(k++, expo.getId());
+        pstmt.executeUpdate();
+        return setUpHolles(expo, connection);
     }
 
     private void makeRollback(Connection connection) {

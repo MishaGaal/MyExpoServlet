@@ -27,7 +27,7 @@
             </c:forEach>
             <li class="page-item ">
                 <a class="page-link  border-secondary text-muted" tabindex="-1"
-                   href="?page=${sessionScope.pages.count-1}"><fmt:message key="end"/></a>
+                   href="?page=${sessionScope.pages.count}"><fmt:message key="end"/></a>
             </li>
         </ul>
     </div>
