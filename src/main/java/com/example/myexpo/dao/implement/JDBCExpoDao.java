@@ -260,7 +260,7 @@ public class JDBCExpoDao implements ExpoDao {
             connection.commit();
             return Optional.of(expo);
         } catch (Exception e) {
-            log.info("{}", "Couldn't find expos " + e.getMessage());
+            log.info("{}", "Couldn't submit expo " + e.getMessage());
             makeRollback(connection);
         } finally {
             close(pstmt);
@@ -306,7 +306,7 @@ public class JDBCExpoDao implements ExpoDao {
             connection.commit();
             return true;
         } catch (Exception e) {
-            log.info("{}", "No user deleted " + e.getMessage());
+            log.info("{}", "Expo hasn't been deleted" + e.getMessage());
             makeRollback(connection);
         } finally {
             close(pstmt, pstmt2);

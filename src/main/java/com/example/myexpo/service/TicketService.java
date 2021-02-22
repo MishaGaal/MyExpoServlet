@@ -16,7 +16,7 @@ public class TicketService {
 
     public List<Ticket> getUserTickets(User user) throws Exception {
         try (TicketDao dao = daoFactory.createTicketDao()) {
-            return dao.findAllByUser(user).orElseThrow(() -> new Exception("no tickets have been found"));
+            return dao.findAllByUser(user).orElseThrow(() -> new Exception("no user tickets have been found"));
         }
     }
 

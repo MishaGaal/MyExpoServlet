@@ -58,7 +58,7 @@ public class JDBCUserDao implements UserDao {
             connection.commit();
             return Optional.of(user);
         } catch (Exception e) {
-            log.info("{}", "Couldn't create user " + e.getMessage());
+            log.info("{}", "Couldn't create new user " + e.getMessage());
             makeRollback(connection);
         } finally {
             close(rs, pstmt, pstmt2);
@@ -76,7 +76,7 @@ public class JDBCUserDao implements UserDao {
             pstmt.setInt(k++, id);
             return Optional.of(getUser(pstmt.executeQuery(), users));
         } catch (Exception e) {
-            log.info("{}", "No user found " + e.getMessage());
+            log.info("{}", "User not found " + e.getMessage());
         } finally {
             close(pstmt);
         }
@@ -134,26 +134,7 @@ public class JDBCUserDao implements UserDao {
             rs = pstmt.executeQuery();
             return Optional.of(user);
         } catch (Exception e) {
-            log.info("{}", "No user found " + e.getMessage());
-        } finally {
-            close(rs, pstmt);
-        }
-        return Optional.empty();
-    }
-
-    public Optional<User> updateRoles(User user, User.Role role) {
-
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        try {
-            pstmt = connection.prepareStatement(USER_UPDATE_ROLES);
-            int k = 1;
-            pstmt.setInt(k++, user.getId());
-            pstmt.setObject(k++, role);
-            rs = pstmt.executeQuery();
-            return Optional.of(user);
-        } catch (Exception e) {
-            log.info("{}", "No user found " + e.getMessage());
+            log.info("{}", "User couldn't update " + e.getMessage());
         } finally {
             close(rs, pstmt);
         }

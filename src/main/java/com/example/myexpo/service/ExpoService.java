@@ -19,25 +19,25 @@ public class ExpoService {
 
     public Page<Expo> findByExhibitedTrueOrderByPriceDesc(int page) throws Exception {
         try (ExpoDao dao = daoFactory.createExpoDao()) {
-            return dao.findByExhibitedTrueOrderByPriceDesc(page).orElseThrow(() -> new Exception("no expos been found"));
+            return dao.findByExhibitedTrueOrderByPriceDesc(page).orElseThrow(() -> new Exception("no expos price desc has been found"));
         }
     }
 
     public Page<Expo> findByExhibitedTrueOrderByPriceAsc(int page) throws Exception {
         try (ExpoDao dao = daoFactory.createExpoDao()) {
-            return dao.findByExhibitedTrueOrderByPriceAsc(page).orElseThrow(() -> new Exception("no expos have been found"));
+            return dao.findByExhibitedTrueOrderByPriceAsc(page).orElseThrow(() -> new Exception("no expos price asc have been found"));
         }
     }
 
     public Page<Expo> findByExhibitedTrueOrderByDates(LocalDate startDate, LocalDate endDate, int page) throws Exception {
         try (ExpoDao dao = daoFactory.createExpoDao()) {
-            return dao.findByExhibitedTrueOrderByDates(startDate, endDate, page).orElseThrow(() -> new Exception("no expos have been found"));
+            return dao.findByExhibitedTrueOrderByDates(startDate, endDate, page).orElseThrow(() -> new Exception("no expos with dates have been found"));
         }
     }
 
     public Page<Expo> findByExhibitedTrueOrderByTheme(String theme, int page) throws Exception {
         try (ExpoDao dao = daoFactory.createExpoDao()) {
-            return dao.findByExhibitedTrueOrderByTheme(theme, page).orElseThrow(() -> new Exception("no expos have been found"));
+            return dao.findByExhibitedTrueOrderByTheme(theme, page).orElseThrow(() -> new Exception("no expos with theme have been found"));
         }
     }
 
@@ -70,7 +70,7 @@ public class ExpoService {
             if (expo.getHolles().size() > 0) {
                 expo.setExhibited(true);
             }
-            return dao.create(expo).orElseThrow(() -> new Exception("expo couldn't create"));
+            return dao.create(expo).orElseThrow(() -> new Exception("expo couldn't create expo"));
         }
     }
 

@@ -55,16 +55,20 @@ public class JDBCTicketDao implements TicketDao {
                 ticket = new Ticket();
                 ticket.setId(rs.getInt(1));
             }
-            pstmt2 = connection.prepareStatement(UPDATE_AMOUNT);
+            pstmt2 = connection.prepareStatement(UPDATE_AMOUNT, Statement.RETURN_GENERATED_KEYS);
             int x = 1;
             pstmt2.setInt(x++, amount);
             pstmt2.setInt(x++, expo_id);
             pstmt2.setInt(x++, amount);
             pstmt2.executeUpdate();
+            rs = pstmt2.getGeneratedKeys();
+            if (!rs.next()) {
+                throw new Exception("Expo is not available");
+            }
             connection.commit();
             return Optional.of(ticket);
         } catch (Exception e) {
-            log.info("{}", "Couldn't buy ticket " + e.getMessage());
+            log.info("{}", "Couldn't make transaction: " + e.getMessage());
             makeRollback(connection);
         } finally {
             close(rs, pstmt, pstmt2);
@@ -198,8 +202,8 @@ public class JDBCTicketDao implements TicketDao {
             if (connection != null) {
                 connection.rollback();
             }
-        } catch (SQLException throwables) {
-            log.info("{}", "Couldnt rollback " + throwables.getMessage());
+        } catch (SQLException e) {
+            log.info("{}", "Couldn't rollback " + e.getMessage());
         }
     }
 
